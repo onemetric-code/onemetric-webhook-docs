@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webhook API Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #0078d7;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        h1, h2 {
+            color: #0078d7;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: #d6336c;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.8rem;
+            text-align: left;
+        }
+        th {
+            background: #f0f0f0;
+        }
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #555;
+        }
+        .note {
+            background: #fff3cd;
+            padding: 10px;
+            border-left: 4px solid #ffecb5;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Webhook API Documentation</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Overview</h2>
+            <p>The webhook system for <strong>onemetric.in</strong> allows you to receive real-time notifications about specific events. This document outlines how to integrate and interact with the webhook system.</p>
+        </section>
+
+        <section>
+            <h2>Endpoint Details</h2>
+            <table>
+                <tr>
+                    <th>API URL</th>
+                    <td><code>https://your-webhook-url</code></td>
+                </tr>
+                <tr>
+                    <th>Method</th>
+                    <td><code>POST</code></td>
+                </tr>
+                <tr>
+                    <th>Content Type</th>
+                    <td><code>application/json</code></td>
+                </tr>
+                <tr>
+                    <th>Authorization</th>
+                    <td>API key or Token in the headers</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>Request Contract</h2>
+            <p>The payload for the webhook is a JSON object that adheres to the following structure:</p>
+            <pre>
+{
+  "event_type": "MARKET_GENERATED_ALERT",
+  "sub_type": "Optional sub-type description",
+  "time_stamp": "2024-10-01T10:20:00Z",
+  "details": {
+      "ltp": 30,
+      "close": 20,
+      "high": 35,
+      "low": 15
+  }
+}
+            </pre>
+            <p>Each <code>event_type</code> represents a unique event. Examples include:</p>
+            <ul>
+                <li><code>MARKET_GENERATED_ALERT</code></li>
+                <li><code>TRADE_EXECUTED</code></li>
+                <li><code>PRICE_THRESHOLD_REACHED</code></li>
+                <li><code>USER_NOTIFICATION_SENT</code></li>
+                <li>...and more</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Field Descriptions</h2>
+            <table>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>event_type</code></td>
+                    <td>string</td>
+                    <td>The type of event triggering the webhook.</td>
+                </tr>
+                <tr>
+                    <td><code>sub_type</code></td>
+                    <td>string</td>
+                    <td>(Optional) A sub-category or additional context for the event.</td>
+                </tr>
+                <tr>
+                    <td><code>time_stamp</code></td>
+                    <td>string</td>
+                    <td>The ISO 8601 timestamp when the event occurred.</td>
+                </tr>
+                <tr>
+                    <td><code>details</code></td>
+                    <td>object</td>
+                    <td>An object containing event-specific data.</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>Example Response</h2>
+            <p>The server should respond with a 200 HTTP status code upon successful receipt. For example:</p>
+            <pre>
+{
+  "status": "success",
+  "message": "Webhook received successfully"
+}
+            </pre>
+        </section>
+
+        <section>
+            <h2>Notes</h2>
+            <div class="note">
+                <strong>Important:</strong> Your webhook URL must be publicly accessible and use HTTPS for secure communication.
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Onemetric. All rights reserved.</p>
+    </footer>
+</body>
+</html>
