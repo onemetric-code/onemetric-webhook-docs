@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webhook API Documentation</title>
+    <title>Webhook API Documentation - Onemetric</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,8 +16,17 @@
         header {
             background: #0078d7;
             color: white;
+            display: flex;
+            align-items: center;
             padding: 1rem 2rem;
-            text-align: center;
+        }
+        header img {
+            height: 50px;
+            margin-right: 1rem;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
         }
         main {
             max-width: 800px;
@@ -66,16 +75,32 @@
             border-left: 4px solid #ffecb5;
             margin: 1rem 0;
         }
+        .event-list {
+            margin: 1rem 0;
+            padding: 0;
+            list-style: none;
+        }
+        .event-list li {
+            margin-bottom: 10px;
+        }
+        .event-list a {
+            text-decoration: none;
+            color: #0078d7;
+        }
+        .event-list a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <header>
+        <img src="https://onemetric.in/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FOneMetric_Transparent.047bcfcd.png&w=96&q=75" alt="Onemetric Logo">
         <h1>Webhook API Documentation</h1>
     </header>
     <main>
         <section>
             <h2>Overview</h2>
-            <p>The webhook system for <strong>onemetric.in</strong> allows you to receive real-time notifications about specific events. This document outlines how to integrate and interact with the webhook system.</p>
+            <p>The webhook system for <strong>Onemetric</strong> enables you to receive real-time notifications about key events, such as market alerts and news updates. This document provides all necessary details for integrating and using the webhook API.</p>
         </section>
 
         <section>
@@ -102,11 +127,11 @@
 
         <section>
             <h2>Request Contract</h2>
-            <p>The payload for the webhook is a JSON object that adheres to the following structure:</p>
+            <p>The payload for the webhook request must conform to the following JSON structure:</p>
             <pre>
 {
   "event_type": "MARKET_GENERATED_ALERT",
-  "sub_type": "Optional sub-type description",
+  "sub_type": "MARKET_PREV_HIGH_ALERT",
   "time_stamp": "2024-10-01T10:20:00Z",
   "details": {
       "ltp": 30,
@@ -116,50 +141,33 @@
   }
 }
             </pre>
-            <p>Each <code>event_type</code> represents a unique event. Examples include:</p>
-            <ul>
-                <li><code>MARKET_GENERATED_ALERT</code></li>
-                <li><code>TRADE_EXECUTED</code></li>
-                <li><code>PRICE_THRESHOLD_REACHED</code></li>
-                <li><code>USER_NOTIFICATION_SENT</code></li>
-                <li>...and more</li>
+            <p>The following <code>event_type</code> values are supported:</p>
+            <ul class="event-list">
+                <li><a href="#market-generated-alert">MARKET_GENERATED_ALERT</a></li>
+                <li><a href="#news-alert">NEWS_ALERT</a></li>
             </ul>
         </section>
 
-        <section>
-            <h2>Field Descriptions</h2>
-            <table>
-                <tr>
-                    <th>Field</th>
-                    <th>Type</th>
-                    <th>Description</th>
-                </tr>
-                <tr>
-                    <td><code>event_type</code></td>
-                    <td>string</td>
-                    <td>The type of event triggering the webhook.</td>
-                </tr>
-                <tr>
-                    <td><code>sub_type</code></td>
-                    <td>string</td>
-                    <td>(Optional) A sub-category or additional context for the event.</td>
-                </tr>
-                <tr>
-                    <td><code>time_stamp</code></td>
-                    <td>string</td>
-                    <td>The ISO 8601 timestamp when the event occurred.</td>
-                </tr>
-                <tr>
-                    <td><code>details</code></td>
-                    <td>object</td>
-                    <td>An object containing event-specific data.</td>
-                </tr>
-            </table>
+        <section id="market-generated-alert">
+            <h2>MARKET_GENERATED_ALERT</h2>
+            <p>This event type includes all technical alerts generated based on real-time market data. Supported <code>sub_type</code> values include:</p>
+            <ul>
+                <li><strong>MARKET_PREV_HIGH_ALERT</strong>: Generated when the current stock price exceeds the previous day's high.</li>
+                <li><strong>RSI_OVERSOLD</strong>: Generated when the stock's <a href="https://www.investopedia.com/terms/r/rsi.asp" target="_blank">RSI (Relative Strength Index)</a> value indicates an oversold condition.</li>
+                <li><strong>RSI_OVERBOUGHT</strong>: Generated when the stock's <a href="https://www.investopedia.com/terms/r/rsi.asp" target="_blank">RSI (Relative Strength Index)</a> value indicates an overbought condition.</li>
+                <li><strong>MARKET_AVG_20_ALERT</strong>: Generated based on the 20-day <a href="https://www.investopedia.com/terms/s/sma.asp" target="_blank">Simple Moving Average (SMA)</a> of the stock's closing price.</li>
+                <li><strong>MARKET_AVG_50_ALERT</strong>: Generated based on the 50-day <a href="https://www.investopedia.com/terms/s/sma.asp" target="_blank">Simple Moving Average (SMA)</a> of the stock's closing price.</li>
+            </ul>
+        </section>
+
+        <section id="news-alert">
+            <h2>NEWS_ALERT</h2>
+            <p>This event type is generated when significant news or updates related to a stock are identified. These alerts help keep you informed of critical developments.</p>
         </section>
 
         <section>
-            <h2>Example Response</h2>
-            <p>The server should respond with a 200 HTTP status code upon successful receipt. For example:</p>
+            <h2>Response</h2>
+            <p>A successful webhook request will return the following response:</p>
             <pre>
 {
   "status": "success",
@@ -171,7 +179,7 @@
         <section>
             <h2>Notes</h2>
             <div class="note">
-                <strong>Important:</strong> Your webhook URL must be publicly accessible and use HTTPS for secure communication.
+                <strong>Important:</strong> Ensure your webhook URL is publicly accessible and uses HTTPS for secure communication.
             </div>
         </section>
     </main>
