@@ -14,7 +14,7 @@
             padding: 0;
         }
         header {
-            background: #0078d7;
+            background: #4a4a4a;
             color: white;
             display: flex;
             align-items: center;
@@ -37,7 +37,21 @@
             border-radius: 5px;
         }
         h1, h2 {
-            color: #0078d7;
+            color: #4a4a4a;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            color: #333;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.8rem;
+            text-align: left;
+        }
+        th {
+            background: #e0e0e0;
         }
         code {
             background: #f4f4f4;
@@ -51,19 +65,6 @@
             border-radius: 5px;
             overflow-x: auto;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 0.8rem;
-            text-align: left;
-        }
-        th {
-            background: #f0f0f0;
-        }
         footer {
             text-align: center;
             margin-top: 2rem;
@@ -74,21 +75,6 @@
             padding: 10px;
             border-left: 4px solid #ffecb5;
             margin: 1rem 0;
-        }
-        .event-list {
-            margin: 1rem 0;
-            padding: 0;
-            list-style: none;
-        }
-        .event-list li {
-            margin-bottom: 10px;
-        }
-        .event-list a {
-            text-decoration: none;
-            color: #0078d7;
-        }
-        .event-list a:hover {
-            text-decoration: underline;
         }
     </style>
 </head>
@@ -141,28 +127,48 @@
   }
 }
             </pre>
-            <p>The following <code>event_type</code> values are supported:</p>
-            <ul class="event-list">
-                <li><a href="#market-generated-alert">MARKET_GENERATED_ALERT</a></li>
-                <li><a href="#news-alert">NEWS_ALERT</a></li>
-            </ul>
         </section>
 
-        <section id="market-generated-alert">
-            <h2>MARKET_GENERATED_ALERT</h2>
-            <p>This event type includes all technical alerts generated based on real-time market data. Supported <code>sub_type</code> values include:</p>
-            <ul>
-                <li><strong>MARKET_PREV_HIGH_ALERT</strong>: Generated when the current stock price exceeds the previous day's high.</li>
-                <li><strong>RSI_OVERSOLD</strong>: Generated when the stock's <a href="https://www.investopedia.com/terms/r/rsi.asp" target="_blank">RSI (Relative Strength Index)</a> value indicates an oversold condition.</li>
-                <li><strong>RSI_OVERBOUGHT</strong>: Generated when the stock's <a href="https://www.investopedia.com/terms/r/rsi.asp" target="_blank">RSI (Relative Strength Index)</a> value indicates an overbought condition.</li>
-                <li><strong>MARKET_AVG_20_ALERT</strong>: Generated based on the 20-day <a href="https://www.investopedia.com/terms/s/sma.asp" target="_blank">Simple Moving Average (SMA)</a> of the stock's closing price.</li>
-                <li><strong>MARKET_AVG_50_ALERT</strong>: Generated based on the 50-day <a href="https://www.investopedia.com/terms/s/sma.asp" target="_blank">Simple Moving Average (SMA)</a> of the stock's closing price.</li>
-            </ul>
-        </section>
-
-        <section id="news-alert">
-            <h2>NEWS_ALERT</h2>
-            <p>This event type is generated when significant news or updates related to a stock are identified. These alerts help keep you informed of critical developments.</p>
+        <section>
+            <h2>Supported Events</h2>
+            <p>The following events are currently supported:</p>
+            <table>
+                <tr>
+                    <th>Event Type</th>
+                    <th>Sub Type</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><strong>MARKET_GENERATED_ALERT</strong></td>
+                    <td><strong>MARKET_PREV_HIGH_ALERT</strong></td>
+                    <td>Triggered when the current stock price exceeds the previous day's high.</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><strong>RSI_OVERSOLD</strong></td>
+                    <td>Generated when the stock's <a href="https://www.investopedia.com/terms/r/rsi.asp" target="_blank">RSI (Relative Strength Index)</a> value indicates an oversold condition.</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><strong>RSI_OVERBOUGHT</strong></td>
+                    <td>Generated when the stock's <a href="https://www.investopedia.com/terms/r/rsi.asp" target="_blank">RSI (Relative Strength Index)</a> value indicates an overbought condition.</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><strong>MARKET_AVG_20_ALERT</strong></td>
+                    <td>Based on the 20-day <a href="https://www.investopedia.com/terms/s/sma.asp" target="_blank">Simple Moving Average (SMA)</a> of the stock's closing price.</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><strong>MARKET_AVG_50_ALERT</strong></td>
+                    <td>Based on the 50-day <a href="https://www.investopedia.com/terms/s/sma.asp" target="_blank">Simple Moving Average (SMA)</a> of the stock's closing price.</td>
+                </tr>
+                <tr>
+                    <td><strong>NEWS_ALERT</strong></td>
+                    <td></td>
+                    <td>Triggered when significant news related to a stock is detected.</td>
+                </tr>
+            </table>
         </section>
 
         <section>
